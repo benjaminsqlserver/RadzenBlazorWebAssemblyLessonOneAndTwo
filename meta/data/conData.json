@@ -1,0 +1,190 @@
+{
+  "info": {
+    "title": "conData",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15
+  },
+  "definitions": {
+    "Country": {
+      "x-table": "dbo.Countries",
+      "resource": "Countries",
+      "required": [
+        "CountryName"
+      ],
+      "properties": {
+        "CountryID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "type": "integer"
+        },
+        "CountryName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 255
+        }
+      }
+    }
+  },
+  "paths": {
+    "/Countries": {
+      "get": {
+        "operationId": "getCountries",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Country"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createCountry",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Country",
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Countries({CountryID})": {
+      "delete": {
+        "operationId": "deleteCountry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CountryID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getCountryByCountryID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CountryID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateCountry",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CountryID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Country",
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/conData",
+  "host": "localhost:5001",
+  "schemes": [
+    "https"
+  ]
+}
